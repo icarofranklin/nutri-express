@@ -1,5 +1,7 @@
 package br.com.nutriexpress.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,6 @@ import br.com.nutriexpress.demo.service.CategoriaService;
 import br.dtos.categoria.CategoriaRequestDTO;
 import br.dtos.categoria.CategoriaResponseDTO;
 import jakarta.validation.Valid;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/categorias")
@@ -88,7 +88,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarCategoria(Long id) {
+    public ResponseEntity<Void> deletarCategoria(@PathVariable Long id) {
         // chama o serviço para deletar a categoria existente pelo ID fornecido.
         categoriaService.deletarCategoria(id);
         // retorna uma resposta HTTP 204 No Content, indicando que a operação foi bem-sucedida, mas não há conteúdo a ser retornado.
