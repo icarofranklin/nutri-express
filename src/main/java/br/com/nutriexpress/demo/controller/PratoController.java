@@ -14,13 +14,13 @@ public class PratoController {
     private final List<Prato> pratos = new ArrayList<>();
     private Long proximoId = 1L;
 
-    @GeMapping 
-    public ResponseEntity<List<Pratos>> listarTodos(){
+    @GetMapping
+    public ResponseEntity<List<Prato>> listarTodos(){
         return ResponseEntity.ok(pratos);
     }
 
     @PostMapping
-    public ResponseEntity<Pratos> criar(@RequestBody Prato prato) {
+    public ResponseEntity<Prato> criar(@RequestBody Prato prato) {
         prato.setId(proximoId++);
         pratos.add(prato);
         return ResponseEntity.status(HttpStatus.CREATED).body(prato);
