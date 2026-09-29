@@ -17,18 +17,12 @@ public class PratoService {
 
     private final PratoRepository pratoRepository;
 
-    // Injeção de dependência via construtor
     public PratoService(PratoRepository pratoRepository) {
         this.pratoRepository = pratoRepository;
     }
 
-    /**
-     * Validações de negócio:
-     * 1. Nome único (evita cadastrar pratos duplicados no cardápio).
-     * 2. Sobremesas saudáveis têm limite de 350 calorias.
-     */
     private void validarRegrasDeNegocio(PratoRequestDTO dto, Long pratoIdAtual) {
-        // Validação de unicidade de nome
+        // impede nome duplicado no cardápio
         boolean nomeJaExiste;
         if (pratoIdAtual == null) {
             nomeJaExiste = pratoRepository.existsByNomeIgnoreCase(dto.nome().trim());
@@ -40,7 +34,7 @@ public class PratoService {
             throw new RegraNegocioException("Já existe um prato cadastrado com o nome: '" + dto.nome() + "'.");
         }
 
-        // Validação de calorias para sobremesa saudável
+        // sobremesa saudável não passa de 350 cal
         if ("sobremesa saudável".equalsIgnoreCase(dto.categoria().trim()) && dto.calorias() > 350) {
             throw new RegraNegocioException(
                 "Pratos na categoria 'sobremesa saudável' não podem ter mais de 350 calorias. Calorias informadas: " + dto.calorias()
@@ -122,7 +116,6 @@ public class PratoService {
                 .orElseThrow(() -> new PratoNaoEncontradoException(id));
     }
 
-    // Métodos privados de conversão
     private Prato toEntity(PratoRequestDTO dto) {
         return Prato.builder()
                 .nome(dto.nome().trim())
