@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface PratoRepository extends JpaRepository<Prato, Long> {
 
+    List<Prato> findByCategoria(String categoria);
+
     List<Prato> findByCategoriaIgnoreCase(String categoria);
 
     boolean existsByNomeIgnoreCase(String nome);

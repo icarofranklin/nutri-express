@@ -1,153 +1,66 @@
-# 🥗 Nutri Express — API REST de Delivery de Comida Saudável
+# Nutri Express - API REST Delivery
 
-API REST desenvolvida em **Java** com **Spring Boot** para o gerenciamento de pratos de um aplicativo de delivery de comida saudável, seguindo estritamente a arquitetura em camadas (`Controller -> Service -> Repository -> PostgreSQL`) e DTOs com Java Records.
+API REST desenvolvida em Spring Boot para gestao de pratos de um delivery de comida saudavel. O projeto segue arquitetura em camadas (Controller, Service, Repository, Database), utilizando DTOs com Java Records e persistencia com Spring Data JPA e PostgreSQL.
 
----
+## Tecnologias
 
-## 🛠️ Tecnologias Utilizadas
+- Java 17+
+- Spring Boot
+- Spring Data JPA
+- PostgreSQL (e H2 para testes)
+- Hibernate Validator (Bean Validation)
 
-- **Java 17+**
-- **Spring Boot 3 / 4**
-- **Spring Data JPA & Hibernate**
-- **PostgreSQL** (com suporte a H2 para testes automatizados)
-- **Bean Validation** (Hibernate Validator)
-- **Lombok**
-- **Maven**
+## Como rodar o projeto
 
----
-
-## 🏗️ Arquitetura do Projeto
-
-```
-src/main/java/br/com/nutriexpress/demo/
-├── model/
-│   └── Prato.java                     # Entidade JPA mapeada para a tabela 'pratos'
-├── repository/
-│   └── PratoRepository.java           # Interface Spring Data JPA (sem SQL manual)
-├── dto/
-│   ├── PratoRequestDTO.java           # Java Record com validações Bean Validation
-│   ├── PratoResponseDTO.java          # Java Record retornado nas respostas
-│   └── PratoValorPatchDTO.java        # Record para atualização parcial de valor
-├── service/
-│   └── PratoService.java              # Regras de negócio, conversões toEntity() e toDTO()
-├── controller/
-│   └── PratoController.java           # Endpoints REST e códigos HTTP sem regras de negócio
-├── exception/
-│   ├── GlobalExceptionHandler.java    # Interceptador global com @RestControllerAdvice
-│   ├── PratoNaoEncontradoException.java
-│   └── RegraNegocioException.java
-└── config/
-    └── LoadDatabase.java              # Seed opcional com dados iniciais de exemplo
-```
-
----
-
-## 📋 Regras de Negócio Implementadas
-
-1. **Unicidade de Nome (PratoService)**:
-   - Não é permitido cadastrar dois pratos com o mesmo nome (comparação que ignora maiúsculas e minúsculas).
-   - Caso tente cadastrar ou atualizar para um nome já existente, a API retorna `400 Bad Request` com mensagem explicativa.
-2. **Compatibilidade Calórica por Categoria**:
-   - Pratos cadastrados na categoria `'sobremesa saudável'` não podem ultrapassar 350 calorias por porção.
-
----
-
-## 🚀 Como Executar o Projeto
-
-### 1. Iniciar o PostgreSQL via Docker
-Execute o comando abaixo no terminal para subir um contêiner do PostgreSQL:
+1. Subir o banco de dados PostgreSQL (via Docker):
 
 ```bash
 docker run -d --name postgres-nutri -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres
 ```
 
-### 2. Rodar a Aplicação
-No diretório raiz do projeto, execute:
+2. Executar a aplicacao:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-A aplicação iniciará na porta `8080`.
+A API ficara disponivel em `http://localhost:8080`.
 
----
+Para rodar os testes automatizados:
 
-## 📡 Endpoints da API
-
-| Verbo | Rota | Descrição | Status de Sucesso | Status de Erro |
-|---|---|---|---|---|
-| `GET` | `/pratos` | Lista todos os pratos cadastrados | `200 OK` | - |
-| `GET` | `/pratos/{id}` | Busca um prato pelo seu ID | `200 OK` | `404 Not Found` |
-| `GET` | `/pratos?categoria=vegano` | Filtra pratos por categoria | `200 OK` | - |
-| `POST` | `/pratos` | Cadastra um novo prato | `201 Created` | `400 Bad Request` |
-| `PUT` | `/pratos/{id}` | Atualiza todos os dados de um prato | `200 OK` | `400 Bad Request` / `404 Not Found` |
-| `DELETE` | `/pratos/{id}` | Remove um prato do cardápio | `204 No Content` | `404 Not Found` |
-| `PATCH` | `/pratos/{id}/valor` | **(Bônus 1)** Atualiza apenas o preço | `200 OK` | `400 Bad Request` / `404 Not Found` |
-| `GET` | `/pratos/calorias?max=500` | **(Bônus 2)** Filtra pratos até X calorias | `200 OK` | `400 Bad Request` |
-
----
-
-## 🧪 Exemplos de Requisição (Roteiro de Testes)
-
-### 1. Criar Prato (`POST /pratos`)
-**Corpo da requisição (JSON):**
-```json
-{
-  "nome": "Bowl Tropical de Quinoa",
-  "descricao": "Quinoa real com legumes salteados, castanhas e molho cítrico",
-  "valor": 34.90,
-  "categoria": "vegano",
-  "calorias": 280,
-  "quantidade": 380.0,
-  "unidadeMedida": "g"
-}
+```bash
+./mvnw test
 ```
 
-### 2. Listar Todos (`GET /pratos`)
-Retorna a lista em JSON com status `200 OK`.
+## Endpoints da API
 
-### 3. Filtrar por Categoria (`GET /pratos?categoria=vegano`)
-Retorna apenas pratos cuja categoria seja vegano.
+### Endpoints Obrigatorios
 
-### 4. Buscar por ID (`GET /pratos/1`)
-Retorna o prato correspondente. Se o ID não existir (ex: `/pratos/999`), retorna `404 Not Found`.
+- GET /pratos - Lista todos os pratos cadastrados (200 OK)
+- GET /pratos/{id} - Busca um prato pelo id (200 OK ou 404 Not Found)
+- GET /pratos?categoria={nome} - Filtra pratos por categoria via query param (200 OK)
+- POST /pratos - Cria um novo prato com validacao de campos (201 Created)
+- PUT /pratos/{id} - Atualiza um prato existente (200 OK ou 404 Not Found)
+- DELETE /pratos/{id} - Remove um prato pelo id (204 No Content ou 404 Not Found)
 
-### 5. Atualizar Prato (`PUT /pratos/1`)
-```json
-{
-  "nome": "Salada Tropical Especial com Tofu",
-  "descricao": "Mix de folhas verdes nobres, manga, tomate cereja e tofu defumado grelhado",
-  "valor": 36.00,
-  "categoria": "vegano",
-  "calorias": 240,
-  "quantidade": 360.0,
-  "unidadeMedida": "g"
-}
-```
+### Desafios Extras Implementados (Bonus)
 
-### 6. Atualizar Apenas Valor (`PATCH /pratos/1/valor`)
-```json
-{
-  "valor": 38.50
-}
-```
+- PATCH /pratos/{id}/valor - Atualiza somente o preco do prato (200 OK ou 404 Not Found)
+- GET /pratos/calorias?max={valor} - Filtra pratos com valor calorico menor ou igual ao parametro (200 OK)
+- Tratamento global de erros com GlobalExceptionHandler:
+  - 400 Bad Request com mapa de campos invalidos (MethodArgumentNotValidException)
+  - 404 Not Found com mensagem descritiva (PratoNaoEncontradoException)
+  - 400 Bad Request para violacao de regra de negocio (RegraNegocioException)
 
-### 7. Filtrar por Calorias Máximas (`GET /pratos/calorias?max=300`)
-Retorna apenas pratos que possuam até 300 calorias.
+## Regras de Negocio Implementadas
 
-### 8. Remover Prato (`DELETE /pratos/1`)
-Retorna status `204 No Content`.
+- Unicidade de nome: nao e permitido cadastrar ou atualizar dois pratos com o mesmo nome (ignorando maiusculas e minusculas).
+- Compatibilidade calorica: pratos da categoria "sobremesa saudavel" nao podem exceder 350 calorias por porcao.
 
-### 9. Teste de Validação (`POST /pratos` com dados inválidos)
-Enviar payload com nome em branco ou valor negativo retornará `400 Bad Request` com o mapa detalhado de erros de cada campo:
-```json
-{
-  "timestamp": "2026-09-28T19:50:00",
-  "status": 400,
-  "error": "Erro de validação nos campos informados",
-  "errors": {
-    "nome": "O nome do prato é obrigatório",
-    "valor": "O valor deve ser maior que zero"
-  }
-}
-```
+Ambas as regras estao implementadas e comentadas na classe PratoService.
+
+## DTOs e Arquitetura
+
+- PratoRequestDTO: record com validacoes Bean Validation (@NotBlank, @NotNull, @DecimalMin, @Positive, etc.).
+- PratoResponseDTO: record de saida. Mantem todos os campos do prato (incluindo calorias, peso e unidade) para que o cliente tenha acesso a ficha nutricional completa no delivery.
+- As conversoes toEntity() e toDTO() sao feitas de forma manual e privada no PratoService, isolando a entidade Prato do PratoController.
