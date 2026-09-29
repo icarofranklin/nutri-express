@@ -196,7 +196,7 @@
       }
     },
     {
-      "name": "9. [Bônus] Atualizar Apenas Valor (PATCH)",
+      "name": "9. Atualizar Apenas Valor (PATCH)",
       "request": {
         "method": "PATCH",
         "header": [
@@ -222,11 +222,11 @@
             "valor"
           ]
         },
-        "description": "Desafio 1: Atualiza exclusivamente o campo valor."
+        "description": "Atualiza exclusivamente o campo valor."
       }
     },
     {
-      "name": "10. [Bônus] Filtrar por Calorias Máximas (GET)",
+      "name": "10. Filtrar por Calorias Máximas (GET)",
       "request": {
         "method": "GET",
         "header": [],
@@ -248,7 +248,7 @@
             }
           ]
         },
-        "description": "Desafio 2: Retorna pratos com valor calórico menor ou igual ao parâmetro."
+        "description": "Retorna pratos com valor calórico menor ou igual ao parâmetro."
       }
     }
   ]

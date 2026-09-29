@@ -85,7 +85,6 @@ public class PratoController {
     }
 
     /**
-     * DESAFIO EXTRA 1 (Bônus):
      * PATCH /pratos/{id}/valor
      * Atualiza exclusivamente o valor do prato.
      */
@@ -97,7 +96,6 @@ public class PratoController {
     }
 
     /**
-     * DESAFIO EXTRA 2 (Bônus):
      * GET /pratos/calorias?max=500
      * Filtra e retorna pratos com valor calórico menor ou igual ao valor especificado.
      */

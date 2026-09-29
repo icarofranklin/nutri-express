@@ -17,17 +17,15 @@ public class PratoService {
 
     private final PratoRepository pratoRepository;
 
-    // Injeção de dependência via construtor conforme solicitado
+    // Injeção de dependência via construtor
     public PratoService(PratoRepository pratoRepository) {
         this.pratoRepository = pratoRepository;
     }
 
     /**
-     * REGRA DE NEGÓCIO PRÓPRIA:
-     * 1. Não é permitido cadastrar dois pratos com o mesmo nome (ignorando maiúsculas e minúsculas).
-     *    Isso evita redundâncias no cardápio de delivery e inconsistência de pedidos para a cozinha.
-     * 2. Pratos da categoria 'sobremesa saudável' não podem exceder 350 calorias por porção,
-     *    garantindo a proposta fitness do delivery saudável.
+     * Validações de negócio:
+     * 1. Nome único (evita cadastrar pratos duplicados no cardápio).
+     * 2. Sobremesas saudáveis têm limite de 350 calorias.
      */
     private void validarRegrasDeNegocio(PratoRequestDTO dto, Long pratoIdAtual) {
         // Validação de unicidade de nome
@@ -124,7 +122,7 @@ public class PratoService {
                 .orElseThrow(() -> new PratoNaoEncontradoException(id));
     }
 
-    // Métodos privados de conversão exigidos pela especificação
+    // Métodos privados de conversão
     private Prato toEntity(PratoRequestDTO dto) {
         return Prato.builder()
                 .nome(dto.nome().trim())

@@ -32,9 +32,7 @@ Para rodar os testes automatizados:
 ./mvnw test
 ```
 
-## Endpoints da API
-
-### Endpoints Obrigatorios
+### Endpoints da API
 
 - GET /pratos - Lista todos os pratos cadastrados (200 OK)
 - GET /pratos/{id} - Busca um prato pelo id (200 OK ou 404 Not Found)
@@ -42,9 +40,6 @@ Para rodar os testes automatizados:
 - POST /pratos - Cria um novo prato com validacao de campos (201 Created)
 - PUT /pratos/{id} - Atualiza um prato existente (200 OK ou 404 Not Found)
 - DELETE /pratos/{id} - Remove um prato pelo id (204 No Content ou 404 Not Found)
-
-### Desafios Extras Implementados (Bonus)
-
 - PATCH /pratos/{id}/valor - Atualiza somente o preco do prato (200 OK ou 404 Not Found)
 - GET /pratos/calorias?max={valor} - Filtra pratos com valor calorico menor ou igual ao parametro (200 OK)
 - Tratamento global de erros com GlobalExceptionHandler:
