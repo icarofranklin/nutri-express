@@ -1,0 +1,255 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Nutri Express API",
+    "description": "Coleção completa de testes para a API REST de Delivery de Comida Saudável (Nutri Express).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Criar Prato (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Bowl Tropical de Quinoa\",\n  \"descricao\": \"Quinoa real com legumes salteados, castanhas e molho cítrico\",\n  \"valor\": 34.90,\n  \"categoria\": \"vegano\",\n  \"calorias\": 280,\n  \"quantidade\": 380.0,\n  \"unidadeMedida\": \"g\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/pratos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos"
+          ]
+        },
+        "description": "Cadastra um novo prato no sistema."
+      }
+    },
+    {
+      "name": "2. Listar Todos os Pratos (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos"
+          ]
+        },
+        "description": "Retorna a lista de todos os pratos cadastrados."
+      }
+    },
+    {
+      "name": "3. Buscar Prato por ID (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "1"
+          ]
+        },
+        "description": "Busca um prato pelo seu ID."
+      }
+    },
+    {
+      "name": "4. Buscar ID Inexistente - 404 (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos/999",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "999"
+          ]
+        },
+        "description": "Testa o retorno 404 Not Found para IDs inexistentes."
+      }
+    },
+    {
+      "name": "5. Filtrar por Categoria (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos?categoria=vegano",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos"
+          ],
+          "query": [
+            {
+              "key": "categoria",
+              "value": "vegano"
+            }
+          ]
+        },
+        "description": "Filtra pratos por categoria."
+      }
+    },
+    {
+      "name": "6. Atualizar Prato (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Salada Tropical Especial com Tofu\",\n  \"descricao\": \"Mix de folhas verdes nobres, manga, tomate cereja e tofu defumado grelhado\",\n  \"valor\": 36.00,\n  \"categoria\": \"vegano\",\n  \"calorias\": 240,\n  \"quantidade\": 360.0,\n  \"unidadeMedida\": \"g\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/pratos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "1"
+          ]
+        },
+        "description": "Atualiza todos os dados de um prato."
+      }
+    },
+    {
+      "name": "7. Remover Prato (DELETE)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "1"
+          ]
+        },
+        "description": "Remove um prato (esperado HTTP 204 No Content)."
+      }
+    },
+    {
+      "name": "8. Teste de Validação - 400 Bad Request (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"\",\n  \"descricao\": \"Prato inválido\",\n  \"valor\": -10.00,\n  \"categoria\": \"vegano\",\n  \"calorias\": -5,\n  \"quantidade\": 0,\n  \"unidadeMedida\": \"\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/pratos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos"
+          ]
+        },
+        "description": "Valida bloqueio de dados inválidos pelo Bean Validation com HTTP 400 Bad Request."
+      }
+    },
+    {
+      "name": "9. [Bônus] Atualizar Apenas Valor (PATCH)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"valor\": 38.50\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/pratos/1/valor",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "1",
+            "valor"
+          ]
+        },
+        "description": "Desafio 1: Atualiza exclusivamente o campo valor."
+      }
+    },
+    {
+      "name": "10. [Bônus] Filtrar por Calorias Máximas (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos/calorias?max=300",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "calorias"
+          ],
+          "query": [
+            {
+              "key": "max",
+              "value": "300"
+            }
+          ]
+        },
+        "description": "Desafio 2: Retorna pratos com valor calórico menor ou igual ao parâmetro."
+      }
+    }
+  ]
+}
