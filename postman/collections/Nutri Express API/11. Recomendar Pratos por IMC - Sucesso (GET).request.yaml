@@ -1,0 +1,8 @@
+$kind: http-request
+description: Recomenda pratos adequados com base no IMC calculado a partir de peso e altura (esperado HTTP 200 OK).
+url: http://localhost:8080/pratos/recomendacao?peso=70.0&altura=1.75
+method: GET
+queryParams:
+  peso: "70.0"
+  altura: "1.75"
+order: 11000

@@ -1,0 +1,5 @@
+$kind: http-request
+description: Retorna a lista de todos os pratos cadastrados.
+url: http://localhost:8080/pratos
+method: GET
+order: 2000

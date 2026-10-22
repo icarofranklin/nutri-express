@@ -18,4 +18,8 @@ public interface PratoRepository extends JpaRepository<Prato, Long> {
     boolean existsByNomeIgnoreCaseAndIdNot(String nome, Long id);
 
     List<Prato> findByCaloriasLessThanEqual(Integer maxCalorias);
+
+    List<Prato> findByCaloriasBetween(Integer minCalorias, Integer maxCalorias);
+
+    List<Prato> findByCaloriasGreaterThanEqual(Integer minCalorias);
 }

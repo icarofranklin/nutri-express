@@ -1,0 +1,19 @@
+$kind: http-request
+description: Cadastra um novo prato no sistema.
+url: http://localhost:8080/pratos
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Bowl Tropical de Quinoa",
+      "descricao": "Quinoa real com legumes salteados, castanhas e molho cítrico",
+      "valor": 34.90,
+      "categoria": "vegano",
+      "calorias": 280,
+      "quantidade": 380.0,
+      "unidadeMedida": "g"
+    }
+order: 1000

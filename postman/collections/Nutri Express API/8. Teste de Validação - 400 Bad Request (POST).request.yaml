@@ -1,0 +1,19 @@
+$kind: http-request
+description: Valida bloqueio de dados inválidos pelo Bean Validation com HTTP 400 Bad Request.
+url: http://localhost:8080/pratos
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "",
+      "descricao": "Prato inválido",
+      "valor": -10.00,
+      "categoria": "vegano",
+      "calorias": -5,
+      "quantidade": 0,
+      "unidadeMedida": ""
+    }
+order: 8000

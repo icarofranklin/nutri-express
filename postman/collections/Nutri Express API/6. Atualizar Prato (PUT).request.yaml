@@ -1,0 +1,19 @@
+$kind: http-request
+description: Atualiza todos os dados de um prato.
+url: http://localhost:8080/pratos/1
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nome": "Salada Tropical Especial com Tofu",
+      "descricao": "Mix de folhas verdes nobres, manga, tomate cereja e tofu defumado grelhado",
+      "valor": 36.00,
+      "categoria": "vegano",
+      "calorias": 240,
+      "quantidade": 360.0,
+      "unidadeMedida": "g"
+    }
+order: 6000

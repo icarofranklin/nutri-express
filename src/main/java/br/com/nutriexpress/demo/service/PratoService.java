@@ -86,6 +86,30 @@ public class PratoService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<PratoResponseDTO> indicarPorImc(Double peso, Double altura) {
+        if (peso == null || altura == null || peso <= 0 || altura <= 0) {
+            throw new RegraNegocioException("Peso e altura devem ser informados e maiores que zero.");
+        }
+
+        double imc = peso / (altura * altura);
+        List<Prato> pratos;
+
+        if (imc < 18.5) {
+            pratos = pratoRepository.findByCaloriasGreaterThanEqual(400);
+        } else if (imc < 25.0) {
+            pratos = pratoRepository.findByCaloriasBetween(300, 450);
+        } else if (imc < 30.0) {
+            pratos = pratoRepository.findByCaloriasLessThanEqual(350);
+        } else {
+            pratos = pratoRepository.findByCaloriasLessThanEqual(250);
+        }
+
+        return pratos.stream()
+                .map(this::toDTO)
+                .toList();
+    }
+
     @Transactional
     public PratoResponseDTO atualizar(Long id, PratoRequestDTO dto) {
         Prato pratoExistente = buscarEntidadePorId(id);

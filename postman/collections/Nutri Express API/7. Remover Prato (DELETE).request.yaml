@@ -1,0 +1,5 @@
+$kind: http-request
+description: Remove um prato (esperado HTTP 204 No Content).
+url: http://localhost:8080/pratos/1
+method: DELETE
+order: 7000

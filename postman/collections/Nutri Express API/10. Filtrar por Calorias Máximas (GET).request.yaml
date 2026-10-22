@@ -1,0 +1,7 @@
+$kind: http-request
+description: Retorna pratos com valor calórico menor ou igual ao parâmetro.
+url: http://localhost:8080/pratos/calorias?max=300
+method: GET
+queryParams:
+  max: "300"
+order: 10000

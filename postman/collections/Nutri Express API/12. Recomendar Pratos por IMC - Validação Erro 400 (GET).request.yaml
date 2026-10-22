@@ -1,0 +1,8 @@
+$kind: http-request
+description: Valida que peso ou altura inválidos disparam regra de negócio com HTTP 400 Bad Request.
+url: http://localhost:8080/pratos/recomendacao?peso=0&altura=1.75
+method: GET
+queryParams:
+  peso: "0"
+  altura: "1.75"
+order: 12000

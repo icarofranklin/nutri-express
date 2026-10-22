@@ -1,0 +1,13 @@
+$kind: http-request
+description: Atualiza exclusivamente o campo valor.
+url: http://localhost:8080/pratos/1/valor
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "valor": 38.50
+    }
+order: 9000

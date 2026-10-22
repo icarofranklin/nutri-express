@@ -1,0 +1,7 @@
+$kind: http-request
+description: Filtra pratos por categoria.
+url: http://localhost:8080/pratos?categoria=vegano
+method: GET
+queryParams:
+  categoria: vegano
+order: 5000

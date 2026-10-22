@@ -1,0 +1,5 @@
+$kind: http-request
+description: Busca um prato pelo seu ID.
+url: http://localhost:8080/pratos/1
+method: GET
+order: 3000

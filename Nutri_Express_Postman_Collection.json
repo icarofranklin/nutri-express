@@ -250,6 +250,66 @@
         },
         "description": "Retorna pratos com valor calórico menor ou igual ao parâmetro."
       }
+    },
+    {
+      "name": "11. Recomendar Pratos por IMC - Sucesso (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos/recomendacao?peso=70.0&altura=1.75",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "recomendacao"
+          ],
+          "query": [
+            {
+              "key": "peso",
+              "value": "70.0"
+            },
+            {
+              "key": "altura",
+              "value": "1.75"
+            }
+          ]
+        },
+        "description": "Recomenda pratos adequados com base no IMC calculado a partir de peso e altura (esperado HTTP 200 OK)."
+      }
+    },
+    {
+      "name": "12. Recomendar Pratos por IMC - Validação Erro 400 (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/pratos/recomendacao?peso=0&altura=1.75",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "pratos",
+            "recomendacao"
+          ],
+          "query": [
+            {
+              "key": "peso",
+              "value": "0"
+            },
+            {
+              "key": "altura",
+              "value": "1.75"
+            }
+          ]
+        },
+        "description": "Valida que peso ou altura inválidos disparam regra de negócio com HTTP 400 Bad Request."
+      }
     }
   ]
 }

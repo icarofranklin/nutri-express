@@ -104,4 +104,15 @@ public class PratoController {
             @RequestParam(name = "max") Integer maxCalorias) {
         return ResponseEntity.ok(pratoService.listarPorCaloriasMax(maxCalorias));
     }
+
+    /**
+     * GET /pratos/recomendacao?peso=70.0&altura=1.75
+     * Recomenda pratos adequados com base no IMC calculado a partir de peso e altura.
+     */
+    @GetMapping("/recomendacao")
+    public ResponseEntity<List<PratoResponseDTO>> indicarPorImc(
+            @RequestParam Double peso,
+            @RequestParam Double altura) {
+        return ResponseEntity.ok(pratoService.indicarPorImc(peso, altura));
+    }
 }
